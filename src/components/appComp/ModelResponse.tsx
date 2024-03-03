@@ -17,9 +17,8 @@ export default function ModelResponse() {
         max_tokens: "512",
       };
       const res = await axios.post("https://chat.vdokart.in/chat.php", data, {
-        withCredentials: true,
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
         },
       });
