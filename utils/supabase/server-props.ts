@@ -7,8 +7,8 @@ import { type GetServerSidePropsContext } from "next";
 
 export function createClient(context: GetServerSidePropsContext) {
   const supabase = createServerClient(
-    "https://jsjoswfatcvghzacmiqj.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzam9zd2ZhdGN2Z2h6YWNtaXFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDkzMTQ0MTIsImV4cCI6MjAyNDg5MDQxMn0.B9rmmcXVjTvnsPruN_AmKgxIuXTLN2RXRRrjUf5twr8",
+    "http://109.199.99.66:8000/",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzA4NzEzMDAwLAogICJleHAiOiAxODY2NTY1ODAwCn0.ZuLdBR1TRM_FUK6xmvgd7PvxwmJWC6lDLhW_ec7gSSg",
     {
       cookies: {
         get(name: string) {
