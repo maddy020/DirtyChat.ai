@@ -24,7 +24,7 @@ export default function Home({ user }: { user: any }) {
 
   useEffect(() => {
     setUser(user);
-  }, []);
+  }, [user]);
 
   const handleState = (value: any) => {
     setUser(value);
