@@ -2,10 +2,10 @@ import Image from "next/image";
 import edit from "../../assets/edit.svg";
 import searchIcon from "../../assets/searchIcon.svg";
 import ChatProfile from "@/components/appComp/ChatProfile";
-export default function Chats() {
+export default function Contacts() {
   return (
     <div
-      className="w-full md:w-1/4 md:p-6 flex flex-col justify-start 
+      className=" md:p-6 flex flex-col justify-start 
       gap-8 md:border-r border-[#6E78DA] h-full "
     >
       <div className="flex flex-row justify-between">
@@ -23,12 +23,6 @@ export default function Chats() {
           className="bg-[#42497D] p-2 rounded-full w-full px-10 text-lg font-semibold outline-none border-none"
         />
         <ul className="w-full pt-6 flex flex-col justify-start cursor-pointer max-h-[36rem] overflow-y-scroll scrollbar-hide ">
-          <li>
-            <ChatProfile />
-          </li>
-          <li>
-            <ChatProfile />
-          </li>
           <li>
             <ChatProfile />
           </li>
