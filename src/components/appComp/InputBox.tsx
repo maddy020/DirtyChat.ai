@@ -1,7 +1,7 @@
 interface Iprops {
   type: string;
   placevalue: string;
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
 }
 

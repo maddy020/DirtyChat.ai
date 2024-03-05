@@ -22,7 +22,9 @@ export default function Home({ user }: { user: any }) {
   const [userId, setUser] = useRecoilState(userAtom);
   console.log("From index", userId);
 
-  setUser(user);
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
   const handleState = (value: any) => {
     setUser(value);
