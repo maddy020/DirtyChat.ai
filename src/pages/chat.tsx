@@ -4,6 +4,7 @@ import Contacts from "../components/appComp/Contacts";
 import ChatHistory from "@/components/appComp/ChatHistory";
 import { useState } from "react";
 import ProfileSidebar from "@/components/appComp/ProfileSidebar";
+import { GetServerSidePropsContext } from "next";
 
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,4 +29,19 @@ export default function Chat() {
       </div>
     </main>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const cookies = context.req.headers.cookie;
+  if (!cookies) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
 }

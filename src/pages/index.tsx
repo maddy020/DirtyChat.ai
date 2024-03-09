@@ -4,10 +4,6 @@ import SideBar from "@/components/appComp/SideBar";
 import TitleBox from "@/components/appComp/TitleBox";
 import Banner from "@/components/appComp/Banner";
 import Models from "@/components/appComp/Models";
-import type { GetServerSidePropsContext } from "next";
-import { useRecoilState } from "recoil";
-import { createClient } from "../../utils/supabase/server-props";
-import { userAtom } from "@/store/atom/auth";
 import {
   Accordion,
   AccordionContent,
@@ -15,20 +11,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function Home({ user }: { user: any }) {
+export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userId, setUser] = useRecoilState(userAtom);
-  console.log("From index", userId);
-
-  useEffect(() => {
-    setUser(user);
-  }, [user]);
-
-  const handleState = (value: any) => {
-    setUser(value);
-  };
 
   return (
     <>
@@ -102,25 +88,4 @@ export default function Home({ user }: { user: any }) {
       </main>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
-
-  const { data: session, error } = await supabase.auth.getSession();
-  // console.log(session);
-  if (error || !session) {
-    console.log(error);
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
-
-  return {
-    props: {
-      user: session,
-    },
-  };
 }

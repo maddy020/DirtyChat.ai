@@ -11,22 +11,27 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useRecoilState } from "recoil";
-import { createClient } from "../../../utils/supabase/component";
-import { userAtom } from "@/store/atom/auth";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function NavBar({ isOpen, setIsOpen }: any) {
-  const [userId, setUser] = useRecoilState(userAtom);
+  const [currUser, setcurrUser] = useState<string | null>(null);
+
+  useEffect(() => {
+    let currUser = localStorage.getItem("currUser");
+    setcurrUser(currUser);
+  }, []);
+
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-  console.log("Navbar", userId);
   const router = useRouter();
-  const supabase = createClient();
+
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
-      setUser({ session: null });
+      await axios.post("http://localhost:3000/api/auth/logout");
+      localStorage.removeItem("currUser");
+      setcurrUser(null);
       router.push("/");
     } catch (error) {
       console.log("Error in signing out", error);
@@ -51,9 +56,9 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
           className="cursor-pointe hidden md:block"
         />
 
-        {userId.session === null && <LoginModal />}
-        {userId.session === null && <SignupModal />}
-        {userId.session !== null && (
+        {currUser === null && <LoginModal />}
+        {currUser === null && <SignupModal />}
+        {currUser !== null && (
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>

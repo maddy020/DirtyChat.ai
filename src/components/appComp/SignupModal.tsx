@@ -2,10 +2,9 @@ import Modal from "react-modal";
 import { useState } from "react";
 import Heading from "./Heading";
 import InputBox from "./InputBox";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
-import { createClient } from "../../../utils/supabase/component";
+import axios from "axios";
 
 export default function SignupModal() {
   const [modalisOpen, setModalIsOpen] = useState(false);
@@ -13,7 +12,6 @@ export default function SignupModal() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const router = useRouter();
-  const supabase = createClient();
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -33,11 +31,19 @@ export default function SignupModal() {
   };
 
   const signin = async () => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      console.error(error);
+    try {
+      const user = {
+        email,
+        password,
+      };
+      await axios.post("http://localhost:3000/api/auth/signup", user, {
+        withCredentials: true,
+      });
+      localStorage.setItem("currUser", name);
+      router.reload();
+    } catch (error) {
+      console.log("ERROR", error);
     }
-    router.push("/chat");
   };
 
   return (
