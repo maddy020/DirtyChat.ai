@@ -7,6 +7,7 @@ import BottomWarning from "./BottomWarning";
 import axios from "axios";
 
 export default function SignupModal() {
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [modalisOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,13 +34,13 @@ export default function SignupModal() {
   const signin = async () => {
     try {
       const user = {
+        name,
         email,
         password,
       };
-      await axios.post("http://localhost:3000/api/auth/signup", user, {
+      await axios.post(`${Base_Url}/auth/signup`, user, {
         withCredentials: true,
       });
-      localStorage.setItem("currUser", name);
       router.reload();
     } catch (error) {
       console.log("ERROR", error);
@@ -49,7 +50,7 @@ export default function SignupModal() {
   return (
     <>
       <button
-        className="px-4 py-2 text-sm md:py-2 md:px-6 rounded-full bg-[#6E78DA]"
+        className="px-4 py-2 text-sm md:py-2 md:px-6 rounded-full bg-[#C62744]"
         onClick={openModal}
       >
         Sign Up
@@ -57,7 +58,7 @@ export default function SignupModal() {
       <Modal
         isOpen={modalisOpen}
         onRequestClose={closeModal}
-        className="modal"
+        className="w-4/5 h-2/3 bg-white rounded-3xl md:h-3/4 md:w-96"
         overlayClassName="overlay"
       >
         <Heading title="Welcome" subtitle="Create your new account" />
@@ -82,9 +83,10 @@ export default function SignupModal() {
             placevalue="Confirm Password"
             onChange={handlePassword}
           />
+
           <button
             onClick={signin}
-            className="bg-[#6E78DA] px-5 rounded-full py-2 w-full text-white font-semibold"
+            className="bg-gradient-to-r from-orange-400 to-red-600 px-5 rounded-full py-2 w-full text-white font-semibold"
           >
             Sign Up
           </button>

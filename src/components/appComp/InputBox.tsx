@@ -16,8 +16,9 @@ export default function InputBox(props: Iprops) {
         type={props.type}
         value={props.value}
         placeholder={props.placevalue}
-        className="p-2 w-full rounded-full border text-black"
+        className="border-2 border-gray-400 focus:border-[#F6883D] focus:outline-none px-4 py-2 rounded-full w-full"
         onChange={(e) => handleChange(e.target.value)}
+        required
       />
     </>
   );

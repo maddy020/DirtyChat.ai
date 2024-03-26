@@ -9,40 +9,56 @@ export default function ChatInput({
   setMessages,
   setIsTyping,
   isTyping,
+  modelId,
 }: {
   setMessages: any;
   setIsTyping: any;
   isTyping: boolean;
+  modelId: number | null;
 }) {
-  const [message, setMessage] = useState("");
+  const [messageInput, setMessageInput] = useState("");
 
+  const userId = localStorage.getItem("currUser")?.slice(1);
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const handleMessage = (value: string) => {
-    setMessage(value);
+    setMessageInput(value);
   };
 
   const handleClick = async (e: any) => {
     e.preventDefault();
+    if (userId === null || userId === undefined)
+      return alert("Please login to continue");
+    const uId = parseInt(userId);
     try {
-      console.log("clicked");
+      if (messageInput === "") return;
       setIsTyping(true);
-      if (message === "") return;
-      setMessages((prev: any) => [...prev, { content: message, self: true }]);
-      setMessage("");
+      setMessages((prev: any) => [
+        ...prev,
+        { role: "user", content: messageInput },
+      ]);
       const data = {
-        name: "amit@dchat.ai",
-        message: "userMessage",
-        system_role:
-          "You are Chanel, the ultimate queen bee of the high school. You're glamorous, popular, and incredibly sarcastic.",
-        max_tokens: "512",
+        message_text: {
+          role: "user",
+          content: messageInput,
+        },
+        max_tokens: 512,
+        userId: uId,
+        modelId: modelId,
       };
-      const res = await axios.post("https://chat.vdokart.in/chat.php", data, {
+      setMessageInput("");
+      const res = await axios.post(`${Base_Url}/user/store`, data, {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
+      console.log(res);
       setMessages((prev: any) => [
         ...prev,
-        { content: res.data.content, self: false },
+        {
+          role: "assistant",
+          content: res.data.message,
+        },
       ]);
       setIsTyping(false);
     } catch (error) {
@@ -51,13 +67,13 @@ export default function ChatInput({
   };
   return (
     <form
-      className="flex px-10 absolute bottom-4 w-full"
-      onSubmit={(e) => handleClick(e)}
+      className="px-4 bottom-12 flex md:px-10 absolute md:bottom-4 w-full"
+      onSubmit={handleClick}
     >
       <Image src={plus} alt="plus" className="cursor-pointer" />
       <InputBox
         type="text"
-        value={message}
+        value={messageInput}
         placevalue="Enter your Message"
         onChange={handleMessage}
       />

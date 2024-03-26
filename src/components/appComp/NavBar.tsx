@@ -13,10 +13,17 @@ import {
 } from "../ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
-export default function NavBar({ isOpen, setIsOpen }: any) {
+export default function NavBar({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: any;
+}) {
   const [currUser, setcurrUser] = useState<string | null>(null);
-
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {
     let currUser = localStorage.getItem("currUser");
     setcurrUser(currUser);
@@ -29,7 +36,9 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/logout");
+      await axios.get(`${Base_Url}/auth/logout`, {
+        withCredentials: true,
+      });
       localStorage.removeItem("currUser");
       setcurrUser(null);
       router.push("/");
@@ -39,7 +48,7 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
   };
 
   return (
-    <main className="w-full fixed  top-0 z-10 justify-between items-center text-xl  bg-[#1A1C27]   border-b border-[#6E78DA] p-4  bg-[#1A11C27]  font-semibold flex flex-row  md:px-8  ">
+    <main className="w-full fixed  top-0 z-10 justify-between items-center text-xl  bg-[#121212]   border-b border-[#393646] p-4    font-semibold flex flex-row  md:px-8  ">
       <div className="flex flex-row gap-12  items-center">
         <Image
           src={hamburger}
@@ -47,7 +56,9 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
           className="cursor-pointer hidden md:block"
           onClick={handleClick}
         />
-        <h2 className="cursor-pointer">Dirtychat.ai</h2>
+        <h2 className="cursor-pointer">
+          Dirtychat.<span className="text-[#C62744]">ai</span>
+        </h2>
       </div>
       <div className="flex flex-row gap-4 items-center justify-center">
         <Image
@@ -60,6 +71,9 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
         {currUser === null && <SignupModal />}
         {currUser !== null && (
           <div>
+            {currUser === "admin" && (
+              <Link href="/admin/dashboard">Dashboard</Link>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Image
@@ -68,7 +82,7 @@ export default function NavBar({ isOpen, setIsOpen }: any) {
                   className="border-white border-2 rounded-full h-8 w-8 cursor-pointer"
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#1A1C27] rounded-lg">
+              <DropdownMenuContent className="bg-[#121212] rounded-xl absolute right-2 z-20">
                 <DropdownMenuLabel className="cursor-pointer">
                   My Account
                 </DropdownMenuLabel>

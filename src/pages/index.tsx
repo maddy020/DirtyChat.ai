@@ -4,6 +4,8 @@ import SideBar from "@/components/appComp/SideBar";
 import TitleBox from "@/components/appComp/TitleBox";
 import Banner from "@/components/appComp/Banner";
 import Models from "@/components/appComp/Models";
+import explore from "../assets/explore.svg";
+import Frequent from "../assets/Frequent.svg";
 import {
   Accordion,
   AccordionContent,
@@ -14,38 +16,38 @@ import {
 import { useState } from "react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <>
       <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <main className="w-full p-5 mt-20">
-        <div className=" md:pl-[100px] md:mt-20 md:h-full md:flex md:flex-col md:justify-start ">
+      <SideBar isOpen={isOpen} />
+      <main className="w-full px-5 mt-20">
+        <div className=" md:pl-[130px]  md:h-full md:flex md:flex-col md:justify-start ">
           <Banner />
           <br />
-          <TitleBox text="Explore Your Girlfriends" />
+          <TitleBox img={explore} />
           <Models />
-          <TitleBox text="Frequently Asked Question" />
+          <TitleBox img={Frequent} />
           <Accordion
             type="single"
             collapsible
-            className="w-full  py-4 md:p-10 flex flex-col md:gap-8"
+            className="w-full  py-4 md:p-10 flex flex-col md:gap-2"
           >
             <AccordionItem
               value="item-1"
-              className="text-lg md:bg-[#2E324D]  md:px-4 md:py-2 rounded-xl border-none md:text-2xl"
+              className="text-lg   md:px-4 md:py-2 rounded-xl border-none md:text-2xl"
             >
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
+              <AccordionTrigger>How does AI girlfriend work</AccordionTrigger>
               <AccordionContent className="text-base md:text-xl">
                 Yes. It adheres to the WAI-ARIA design pattern.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem
               value="item-2"
-              className="text-lg md:bg-[#2E324D]  md:px-4 md:py-2 rounded-xl border-none md:text-2xl"
+              className="text-lg   md:px-4 md:py-2 rounded-xl border-none md:text-2xl no-underline"
             >
-              <AccordionTrigger>Is it styled?</AccordionTrigger>
+              <AccordionTrigger>How does AI girlfriend work</AccordionTrigger>
               <AccordionContent className="text-base md:text-xl">
                 Yes. It comes with default styles that matches the other
                 components&apos; aesthetic.
@@ -53,9 +55,9 @@ export default function Home() {
             </AccordionItem>
             <AccordionItem
               value="item-3"
-              className="text-lg md:bg-[#2E324D]  md:px-4 md:py-2 rounded-xl border-none md:text-2xl"
+              className="text-lg   md:px-4 md:py-2 rounded-xl border-none md:text-2xl"
             >
-              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionTrigger>How does AI girlfriend work</AccordionTrigger>
               <AccordionContent className="text-base md:text-xl">
                 Yes. It&apos;s animated by default, but you can disable it if
                 you prefer.

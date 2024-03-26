@@ -1,24 +1,32 @@
 import Image from "next/image";
-import landing from "../../assets/landing.svg";
 import bannermodel from "../../assets/bannermodel.svg";
+import icon from "../../assets/3d.svg";
+import Link from "next/link";
+import bannerimage from "../../assets/bannerimage.svg";
+import Frame from "../../assets/Frame.svg";
 export default function Banner() {
   return (
     <>
-      <div className="flex  justify-between items-center pl-8 text-white md:justify-around">
-        <div className="text-base font-semibold flex flex-col justify-start md:text-3xl">
-          <p>Stop Searching</p>
-          <p>Start Chatting</p>
-        </div>
-        <Image src={bannermodel} alt="model" className="md:w-1/3 xl:w-1/6" />
+      <Image src={bannerimage} alt="" className="relative" />
+      <div className="absolute top-36 md:top-48 flex flex-col items-start gap-2 lg:top-64 xl:top-80">
+        <Image
+          src={Frame}
+          alt=""
+          className="w-56 md:w-2/3 lg:w-4/5 xl:w-full"
+        />
+        <Link
+          href="/chat"
+          className="bg-[#C62744] text-xs px-3 py-2 cursor-pointer flex justify-center items-center font-semibold md:text-lg 
+          md:w-1/3 md:py-4 rounded-full"
+        >
+          Start Chatting
+        </Link>
       </div>
-      <div className="flex flex-col items-center justify-center gap-5 ">
-        <div className="text-3xl pl-10 pt-8 md:text-5xl font-bold md:pl-0">
-          <h1>Find Your Dream Girlfriend</h1>
-        </div>
-        <button className="border-2 border-white  px-2 py-3 w-52 rounded-full md:text-xl hover:bg-[#6E78DA] font-bold md:w-64 ">
-          Start Chatting!
-        </button>
-      </div>
+      <Image
+        src={icon}
+        alt=""
+        className="absolute w-16 top-20 left-32 md:top-24 md:left-1/2 md:w-28 lg:top-40 xl:w-48 xl:top-32"
+      />
     </>
   );
 }

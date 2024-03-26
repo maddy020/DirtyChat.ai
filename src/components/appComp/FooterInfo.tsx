@@ -6,7 +6,7 @@ interface FooterInfoProps {
 export default function FooterInfo(props: FooterInfoProps) {
   return (
     <div className="flex flex-col justify-start gap-2">
-      <h1 className="text-lg text-[#6E78DA] font-bold md:text-2xl xl:text-2xl">
+      <h1 className="text-lg  text-[#C62744] font-bold md:text-2xl xl:text-2xl">
         {props.head}
       </h1>
       <div className="text-sm md:text-base font-semibold flex flex-col justify-start gap-2 xl:text-xl">

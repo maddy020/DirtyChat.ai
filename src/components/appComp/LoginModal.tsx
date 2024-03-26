@@ -11,7 +11,6 @@ import axios from "axios";
 export default function LoginModal() {
   const [modalisOpen, setModalIsOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -21,7 +20,7 @@ export default function LoginModal() {
   };
 
   const router = useRouter();
-
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,29 +39,28 @@ export default function LoginModal() {
       const user = {
         email,
         password,
+        isAdmin,
       };
-      if (isAdmin) {
-        await axios.post("http://localhost:3000/api/admin/auth/login", user, {
-          withCredentials: true,
-        });
-        router.push("/admin/dashboard");
-      } else {
-        await axios.post("http://localhost:3000/api/auth/login", user, {
-          withCredentials: true,
-        });
-        router.reload();
-      }
-      localStorage.setItem("currUser", email);
+      const res = await axios.post(`${Base_Url}/auth/login`, user, {
+        withCredentials: true,
+      });
+      if (res.data == "Invalid Credentials")
+        return alert("Invalid Credentials");
+      console.log(res.data);
+      localStorage.setItem(
+        "currUser",
+        isAdmin ? `A${res.data.message}` : `U${res.data.message}`
+      );
+      router.reload();
     } catch (error) {
-      console.log("ERROR", error);
+      console.log("Error", error);
     }
   };
 
   return (
     <>
       <button
-        className="text-sm p-2 pl-6 pr-6 rounded-full border border-1 border-white 
-        hover:bg-[#3a3e57]"
+        className="text-sm p-2 pl-6 pr-6 rounded-full border border-1 border-white"
         onClick={openModal}
       >
         Log In
@@ -70,7 +68,7 @@ export default function LoginModal() {
       <Modal
         isOpen={modalisOpen}
         onRequestClose={closeModal}
-        className="modal"
+        className="w-4/5 h-2/3 bg-white rounded-3xl md:h-3/4 md:w-96"
         overlayClassName="overlay"
       >
         <Heading title="Welcome Back!" subtitle="Log in to your account" />
@@ -97,13 +95,13 @@ export default function LoginModal() {
                 Admin?
               </label>
             </div>
-            <Link href="/" className="text-xs text-[#6E78DA] font-semibold">
+            <Link href="/" className="text-xs text-[#F6883D] font-semibold">
               Forgot Password?
             </Link>
           </div>
           <button
             onClick={logIn}
-            className="bg-[#6E78DA] px-5 rounded-full py-2 w-full text-white font-semibold"
+            className="bg-gradient-to-r from-orange-400 to-red-600 px-5 rounded-full py-2 w-full text-white font-semibold"
           >
             Log in
           </button>
