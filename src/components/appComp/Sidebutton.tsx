@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 export default function SideButton({
   img,
   text,
@@ -14,7 +13,7 @@ export default function SideButton({
   isOpen: boolean;
 }) {
   return (
-    <Link
+    <a
       href={href}
       className={`${
         isActive ? "bg-[#C62744]" : ""
@@ -24,6 +23,6 @@ export default function SideButton({
     >
       <Image src={img} alt="img" />
       <h2 className={` ${isOpen ? "" : "hidden"}`}>{text}</h2>
-    </Link>
+    </a>
   );
 }

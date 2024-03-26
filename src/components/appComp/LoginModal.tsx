@@ -2,7 +2,6 @@ import Modal from "react-modal";
 import { useState } from "react";
 import Heading from "./Heading";
 import InputBox from "./InputBox";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
 import { Switch } from "@/components/ui/switch";
@@ -95,9 +94,9 @@ export default function LoginModal() {
                 Admin?
               </label>
             </div>
-            <Link href="/" className="text-xs text-[#F6883D] font-semibold">
+            <a href="/" className="text-xs text-[#F6883D] font-semibold">
               Forgot Password?
-            </Link>
+            </a>
           </div>
           <button
             onClick={logIn}
