@@ -3,7 +3,7 @@ import Navbar from "@/components/admin/Navbar";
 import SideBar from "@/components/admin/SideBar";
 import { GetServerSidePropsContext } from "next";
 
-export default function dashboard() {
+export default function Dashboard() {
   return (
     <>
       <Navbar />
