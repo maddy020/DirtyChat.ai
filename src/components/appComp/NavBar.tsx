@@ -13,6 +13,7 @@ import {
 } from "../ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function NavBar({
   isOpen,
@@ -70,7 +71,9 @@ export default function NavBar({
         {currUser === null && <SignupModal />}
         {currUser !== null && (
           <div>
-            {currUser === "admin" && <a href="/admin/dashboard">Dashboard</a>}
+            {currUser === "admin" && (
+              <Link href="/admin/dashboard">Dashboard</Link>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Image

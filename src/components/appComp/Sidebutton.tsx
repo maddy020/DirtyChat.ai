@@ -1,3 +1,5 @@
+import { Link } from "lucide-react";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 export default function SideButton({
   img,
@@ -6,14 +8,14 @@ export default function SideButton({
   isActive,
   isOpen,
 }: {
-  img: any;
+  img: StaticImport | string;
   text: string;
   href: string;
   isActive: boolean;
   isOpen: boolean;
 }) {
   return (
-    <a
+    <Link
       href={href}
       className={`${
         isActive ? "bg-[#C62744]" : ""
@@ -23,6 +25,6 @@ export default function SideButton({
     >
       <Image src={img} alt="img" />
       <h2 className={` ${isOpen ? "" : "hidden"}`}>{text}</h2>
-    </a>
+    </Link>
   );
 }

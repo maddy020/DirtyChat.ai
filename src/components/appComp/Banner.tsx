@@ -1,6 +1,7 @@
 import Image from "next/image";
 import bannermodel from "../../assets/bannermodel.svg";
 import icon from "../../assets/3d.svg";
+import Link from "next/link";
 import bannerimage from "../../assets/bannerimage.svg";
 import Frame from "../../assets/Frame.svg";
 export default function Banner() {
@@ -13,13 +14,13 @@ export default function Banner() {
           alt=""
           className="w-56 md:w-2/3 lg:w-4/5 xl:w-full"
         />
-        <a
+        <Link
           href="/chat"
           className="bg-[#C62744] text-xs px-3 py-2 cursor-pointer flex justify-center items-center font-semibold md:text-lg 
           md:w-1/3 md:py-4 rounded-full"
         >
           Start Chatting
-        </a>
+        </Link>
       </div>
       <Image
         src={icon}

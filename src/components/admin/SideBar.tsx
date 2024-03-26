@@ -7,8 +7,7 @@ import { useRouter } from "next/router";
 export default function SideBar() {
   const router = useRouter();
   const curRoute = router.asPath;
-  const val = curRoute === "/admin/dashboard";
-  console.log(val);
+
   return (
     <main className="flex md:flex-col px-4 w-full  bg-[#000]  items-center  md:h-[100vh] md:gap-28 md:py-6 fixed z-10 md:top-0 md:left-0 transition-all duration-400 ease-in md:w-[231px] overflow-hidden md:border-r md:border-t md:border-[#393646]">
       <div className="flex items-center justify-center">
@@ -20,23 +19,32 @@ export default function SideBar() {
             img={home}
             text="Dashboard"
             href="/admin/dashboard"
+            isOpen={true}
             isActive={curRoute === "/admin/dashboard"}
           />
           <SideButton
             img={usergroup}
             text="Characters"
             href="/admin/characters"
+            isOpen={true}
             isActive={curRoute === "/admin/characters"}
           />
           <SideButton
             img={user}
             text="Users"
             href="/admin/users"
+            isOpen={true}
             isActive={curRoute === "/admin/users"}
           />
         </div>
         <div className="hidden md:flex md:flex-col md:gap-8 md:w-full md:px-4">
-          <SideButton img={logout} text="Signout" href="/" isActive={false} />
+          <SideButton
+            isOpen={true}
+            img={logout}
+            text="Signout"
+            href="/"
+            isActive={false}
+          />
         </div>
       </div>
     </main>

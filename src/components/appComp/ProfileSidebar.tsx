@@ -52,7 +52,7 @@ export default function ProfileSidebar({
       }
     }
     getModel();
-  }, [modelId]);
+  }, [modelId, Base_Url]);
   return (
     <div className="right-0">
       <div className="w-full relative right-0">
