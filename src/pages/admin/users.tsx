@@ -8,8 +8,6 @@ import {
 } from "@/components/ui/table";
 import Navbar from "@/components/admin/Navbar";
 import SideBar from "@/components/admin/SideBar";
-import Image from "next/image";
-import Add from "@/components/admin/Add";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import { useState } from "react";
@@ -19,7 +17,7 @@ type Item = {
   name: string;
 };
 
-export default function Dashboard({ data }: { data: Array<Item> }) {
+export default function UsersDashboard({ data }: { data: Array<Item> }) {
   const [Data, setData] = useState(data);
   return (
     <>

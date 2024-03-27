@@ -14,7 +14,7 @@ export default function handler(
     try {
       return res.json({
         message:
-          "Hi there ! I am your AI model .Can you give me some more detailed information regarding your profile ",
+          "Hi there ! I am your AI model.Can you give me some more detailed information regarding your profile ",
       });
     } catch (error) {
       return res

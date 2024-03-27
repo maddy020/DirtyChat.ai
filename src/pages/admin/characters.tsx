@@ -36,7 +36,7 @@ type Item = {
   };
 };
 
-export default function Dashboard({ data }: { data: Array<Item> }) {
+export default function ModelDashboard({ data }: { data: Array<Item> }) {
   const [Data, setData] = useState(data);
 
   return (
