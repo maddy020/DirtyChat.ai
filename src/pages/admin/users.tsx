@@ -6,8 +6,8 @@ import {
   TableBody,
   TableHead,
 } from "@/components/ui/table";
-import Navbar from "@/components/admin/Navbar";
-import SideBar from "@/components/admin/SideBar";
+import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import { useState } from "react";
@@ -17,12 +17,12 @@ type Item = {
   name: string;
 };
 
-export default function UsersDashboard({ data }: { data: Array<Item> }) {
+export default function Users({ data }: { data: Array<Item> }) {
   const [Data, setData] = useState(data);
   return (
     <>
-      <Navbar />
-      <SideBar />
+      <AdminNavbar />
+      <AdminSidebar />
       <div className="ml-80 mt-20 pt-10">
         <h1 className="text-3xl font-semibold">Users</h1>
 

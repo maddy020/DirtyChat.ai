@@ -5,7 +5,7 @@ interface Iprops {
   vref: any;
 }
 
-export default function InputBox(props: Iprops) {
+export default function Input(props: Iprops) {
   return (
     <>
       <input

@@ -6,8 +6,8 @@ import {
   TableBody,
   TableHead,
 } from "@/components/ui/table";
-import Navbar from "@/components/admin/Navbar";
-import SideBar from "@/components/admin/SideBar";
+import AdminNavbar from "@/components/admin/AdminNavbar";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 import Image from "next/image";
 import Add from "@/components/admin/Add";
 import { GetServerSideProps } from "next";
@@ -36,13 +36,13 @@ type Item = {
   };
 };
 
-export default function ModelDashboard({ data }: { data: Array<Item> }) {
+export default function Characters({ data }: { data: Array<Item> }) {
   const [Data, setData] = useState(data);
 
   return (
     <>
-      <Navbar />
-      <SideBar />
+      <AdminNavbar />
+      <AdminSidebar />
       <div className="ml-64 mt-20 pt-8 pr-10">
         <div className="flex w-full justify-between pb-4">
           <h1 className="text-3xl font-semibold">Characters</h1>

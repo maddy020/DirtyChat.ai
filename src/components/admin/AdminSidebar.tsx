@@ -2,9 +2,9 @@ import home from "../../assets/home.svg";
 import logout from "../../assets/logout.svg";
 import user from "../../assets/user.svg";
 import usergroup from "../../assets/usergroup.svg";
-import SideButton from "../appComp/Sidebutton";
+import UserAdminSidebutton from "../appComp/UserAdminSidebutton";
 import { useRouter } from "next/router";
-export default function SideBar() {
+export default function AdminSidebar() {
   const router = useRouter();
   const curRoute = router.asPath;
 
@@ -15,21 +15,21 @@ export default function SideBar() {
       </div>
       <div className="flex flex-col justify-between h-full w-full">
         <div className=" flex flex-row  gap-8 md:flex-col w-full">
-          <SideButton
+          <UserAdminSidebutton
             img={home}
             text="Dashboard"
             href="/admin/dashboard"
             isOpen={true}
             isActive={curRoute === "/admin/dashboard"}
           />
-          <SideButton
+          <UserAdminSidebutton
             img={usergroup}
             text="Characters"
             href="/admin/characters"
             isOpen={true}
             isActive={curRoute === "/admin/characters"}
           />
-          <SideButton
+          <UserAdminSidebutton
             img={user}
             text="Users"
             href="/admin/users"
@@ -38,7 +38,7 @@ export default function SideBar() {
           />
         </div>
         <div className="hidden md:flex md:flex-col md:gap-8 md:w-full md:px-4">
-          <SideButton
+          <UserAdminSidebutton
             isOpen={true}
             img={logout}
             text="Signout"

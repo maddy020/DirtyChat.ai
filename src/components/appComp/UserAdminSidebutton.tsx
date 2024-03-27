@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Sidebutton({
+export default function UserAdminSidebutton({
   img,
   text,
   href,

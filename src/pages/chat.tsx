@@ -1,5 +1,5 @@
-import NavBar from "@/components/appComp/NavBar";
-import SideBar from "@/components/appComp/SideBar";
+import UserNavbar from "@/components/appComp/UserNavbar";
+import UserSidebar from "@/components/appComp/UserSidebar";
 import Contacts from "../components/appComp/Contacts";
 import ChatHistory from "@/components/appComp/ChatHistory";
 import { useState } from "react";
@@ -18,8 +18,8 @@ export default function Chat({ data }: { data: Array<{}> }) {
 
   return (
     <>
-      <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <SideBar isOpen={isOpen} />
+      <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UserSidebar isOpen={isOpen} />
       <main className="pl-4 pt-20 h-[96vh] md:pl-[110px] md:pt-16 md:flex">
         <div
           className={`${

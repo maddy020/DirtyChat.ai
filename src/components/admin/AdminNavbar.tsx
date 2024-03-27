@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function NavBar({ isOpen, setIsOpen }: any) {
+export default function AdminNavbar({ isOpen, setIsOpen }: any) {
   const [currUser, setcurrUser] = useState<string | null>(null);
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   useEffect(() => {

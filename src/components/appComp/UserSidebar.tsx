@@ -6,10 +6,10 @@ import token from "../../assets/token.svg";
 import message from "../../assets/message.svg";
 import star from "../../assets/star.svg";
 import user from "../../assets/user.svg";
-import SideButton from "./Sidebutton";
+import UserAdminSidebutton from "./UserAdminSidebutton";
 import { useRouter } from "next/router";
 
-export default function SideBar({ isOpen }: { isOpen: boolean }) {
+export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
   const router = useRouter();
   const curRoute = router.asPath;
   return (
@@ -21,42 +21,42 @@ export default function SideBar({ isOpen }: { isOpen: boolean }) {
       }
     >
       <div className=" flex flex-row gap-1 md:flex-col w-full">
-        <SideButton
+        <UserAdminSidebutton
           img={home}
           text="Home"
           href="/"
           isOpen={isOpen}
           isActive={curRoute === "/"}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={message}
           text="Chats"
           href="/chat"
           isOpen={isOpen}
           isActive={curRoute === "/chat"}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={user}
           text="Account"
           href="/"
           isOpen={isOpen}
           isActive={curRoute === "/account"}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={star}
           text="Premium"
           href="/"
           isOpen={isOpen}
           isActive={curRoute === "/premium"}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={token}
           text="Tokens"
           href="/"
           isOpen={isOpen}
           isActive={curRoute === ""}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={fire}
           text="Streak"
           href="/"
@@ -65,14 +65,14 @@ export default function SideBar({ isOpen }: { isOpen: boolean }) {
         />
       </div>
       <div className="hidden md:flex md:flex-col md:gap-2 md:w-full md:px-4">
-        <SideButton
+        <UserAdminSidebutton
           img={discord}
           text="discord"
           href="/"
           isOpen={isOpen}
           isActive={curRoute === "/discord"}
         />
-        <SideButton
+        <UserAdminSidebutton
           img={group}
           text="Reddit"
           href="/"

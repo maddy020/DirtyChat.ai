@@ -1,6 +1,6 @@
 import Footer from "@/components/appComp/Footer";
-import NavBar from "@/components/appComp/NavBar";
-import SideBar from "@/components/appComp/SideBar";
+import UserNavbar from "@/components/appComp/UserNavbar";
+import UserSidebar from "@/components/appComp/UserSidebar";
 import TitleBox from "@/components/appComp/TitleBox";
 import Banner from "@/components/appComp/Banner";
 import Models from "@/components/appComp/Models";
@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <>
-      <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <SideBar isOpen={isOpen} />
+      <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UserSidebar isOpen={isOpen} />
       <main className="w-full px-5 mt-20">
         <div className=" md:pl-[130px]  md:h-full md:flex md:flex-col md:justify-start ">
           <Banner />
