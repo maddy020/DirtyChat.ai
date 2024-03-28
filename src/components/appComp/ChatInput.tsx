@@ -67,7 +67,7 @@ export default function ChatInput({
   };
   return (
     <form
-      className="px-4 bottom-12 flex md:px-10 absolute md:bottom-4 w-full"
+      className="px-4 bottom-12 text-black flex md:px-10 absolute md:bottom-4 w-full"
       onSubmit={handleClick}
     >
       <Image src={plus} alt="plus" className="cursor-pointer" />
