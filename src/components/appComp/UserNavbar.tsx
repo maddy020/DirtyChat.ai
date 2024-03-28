@@ -5,6 +5,7 @@ import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 import user from "../../assets/user.svg";
 import { useRouter } from "next/router";
+import { createClient } from "../../../utils/supabase/component";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +13,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 
 export default function UserNavbar({
@@ -23,7 +23,7 @@ export default function UserNavbar({
   setIsOpen: any;
 }) {
   const [currUser, setcurrUser] = useState<string | null>(null);
-  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+  const supabase = createClient();
   useEffect(() => {
     let currUser = localStorage.getItem("currUser");
     setcurrUser(currUser);
@@ -36,9 +36,7 @@ export default function UserNavbar({
 
   const handleLogout = async () => {
     try {
-      await axios.get(`${Base_Url}/auth/logout`, {
-        withCredentials: true,
-      });
+      await supabase.auth.signOut();
       localStorage.removeItem("currUser");
       setcurrUser(null);
       router.push("/");
