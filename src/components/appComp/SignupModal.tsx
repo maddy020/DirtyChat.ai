@@ -4,6 +4,7 @@ import Heading from "./Heading";
 import InputBox from "./InputBox";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
+import { createClient } from "../../../utils/supabase/component";
 import axios from "axios";
 
 export default function SignupModal() {
@@ -13,7 +14,7 @@ export default function SignupModal() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const router = useRouter();
-
+  const supabase = createClient();
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -33,14 +34,16 @@ export default function SignupModal() {
 
   const signin = async () => {
     try {
+      const { error, data } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        console.error(error);
+      }
       const user = {
         name,
         email,
         password,
       };
-      await axios.post(`${Base_Url}/auth/signup`, user, {
-        withCredentials: true,
-      });
+      await axios.post(`${Base_Url}/auth/signup`, user);
       router.reload();
     } catch (error) {
       console.log("ERROR", error);
@@ -58,7 +61,7 @@ export default function SignupModal() {
       <Modal
         isOpen={modalisOpen}
         onRequestClose={closeModal}
-        className="w-4/5 h-2/3 bg-white rounded-3xl md:h-3/4 md:w-96"
+        className="w-4/5 h-2/3 bg-white text-black rounded-3xl md:h-3/4 md:w-96"
         overlayClassName="overlay"
       >
         <Heading title="Welcome" subtitle="Create your new account" />

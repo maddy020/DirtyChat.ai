@@ -10,10 +10,10 @@ import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import Image from "next/image";
 import Add from "@/components/admin/Add";
-import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import axios from "axios";
 import { useState } from "react";
-
+import { createClient } from "../../../utils/supabase/server-props";
 type Item = {
   id: number;
   name: string;
@@ -36,8 +36,12 @@ type Item = {
   };
 };
 
-export default function Characters({ data }: { data: Array<Item> }) {
-  const [Data, setData] = useState(data);
+export default function Characters({
+  serverData,
+}: {
+  serverData: Array<Item>;
+}) {
+  const [Data, setData] = useState(serverData);
 
   return (
     <>
@@ -89,12 +93,24 @@ export default function Characters({ data }: { data: Array<Item> }) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSideProps) {
-  const res = await axios.get("http://localhost:8000/admin/models", {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createClient(context);
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+  const res = await axios.get(`${Base_Url}/admin/models`, {
     withCredentials: true,
   });
-  const data = res.data;
+  const serverData = res.data;
   return {
-    props: { data },
+    props: { serverData },
   };
 }

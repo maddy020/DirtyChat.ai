@@ -28,7 +28,7 @@ export default function ChatInput({
     e.preventDefault();
     if (userId === null || userId === undefined)
       return alert("Please login to continue");
-    const uId = parseInt(userId);
+    const uId = userId;
     try {
       if (messageInput === "") return;
       setIsTyping(true);

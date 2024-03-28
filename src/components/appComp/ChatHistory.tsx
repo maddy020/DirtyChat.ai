@@ -45,7 +45,7 @@ export default function ChatHistory({
       try {
         if (userId === null || userId === undefined)
           return alert("Please login to continue");
-        const uId = parseInt(userId);
+        const uId = userId;
         const res = await axios.get(`${Base_Url}/user/getToken/${uId}`, {
           withCredentials: true,
         });
@@ -62,7 +62,7 @@ export default function ChatHistory({
       try {
         if (userId === null || userId === undefined)
           return alert("Please login to continue");
-        const uId = parseInt(userId);
+        const uId = userId;
 
         const res = await axios.get(
           `${Base_Url}/user/getMessages/${uId}/${modelId}`,
@@ -89,7 +89,7 @@ export default function ChatHistory({
     try {
       if (userId === null || userId === undefined)
         return alert("Please login to continue");
-      const uId = parseInt(userId);
+      const uId = userId;
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",

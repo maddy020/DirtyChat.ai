@@ -6,11 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
 import { Switch } from "@/components/ui/switch";
+import { createClient } from "../../../utils/supabase/component";
 import axios from "axios";
 
 export default function LoginModal() {
   const [modalisOpen, setModalIsOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+  const supabase = createClient();
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -20,7 +23,6 @@ export default function LoginModal() {
   };
 
   const router = useRouter();
-  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -36,21 +38,23 @@ export default function LoginModal() {
 
   const logIn = async () => {
     try {
-      const user = {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        console.error(error);
+      }
+      const res = await axios.post(`${Base_Url}/auth/login`, {
         email,
         password,
         isAdmin,
-      };
-      const res = await axios.post(`${Base_Url}/auth/login`, user, {
-        withCredentials: true,
       });
-      if (res.data == "Invalid Credentials")
-        return alert("Invalid Credentials");
-      console.log(res.data);
       localStorage.setItem(
         "currUser",
         isAdmin ? `A${res.data.message}` : `U${res.data.message}`
       );
+
       router.reload();
     } catch (error) {
       console.log("Error", error);

@@ -1,6 +1,7 @@
 import CardAdmin from "@/components/admin/CardAdmin";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import { createClient } from "../../../utils/supabase/server-props";
 import { GetServerSidePropsContext } from "next";
 
 export default function Dashboard() {
@@ -21,10 +22,10 @@ export default function Dashboard() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { req } = context;
-  const cookieHeader = req.headers.cookie;
-  const adminToken = cookieHeader?.includes("admin");
-  if (!adminToken) {
+  const supabase = createClient(context);
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data) {
     return {
       redirect: {
         destination: "/",

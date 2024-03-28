@@ -5,13 +5,15 @@ import ChatHistory from "@/components/appComp/ChatHistory";
 import { useState } from "react";
 import axios from "axios";
 import ProfileSidebar from "@/components/appComp/ProfileSidebar";
-import { GetServerSidePropsContext } from "next";
+import type { User } from "@supabase/supabase-js";
+import type { GetServerSidePropsContext } from "next";
 
-export default function Chat({ data }: { data: Array<{}> }) {
+import { createClient } from "../../utils/supabase/server-props";
+
+export default function Chat({ Data }: { Data: Array<{}> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [modelId, setModelId] = useState(null);
-
   const handleState = () => {
     setIsProfileOpen(!isProfileOpen);
   };
@@ -26,7 +28,7 @@ export default function Chat({ data }: { data: Array<{}> }) {
             modelId !== null ? "hidden" : ""
           } w-full md:block md:w-80`}
         >
-          <Contacts data={data} modelId={modelId} setModelId={setModelId} />
+          <Contacts data={Data} modelId={modelId} setModelId={setModelId} />
         </div>
         {modelId === null && (
           <div className="hidden md:w-full md:relative md:flex md:justify-center md:items-center">
@@ -47,23 +49,24 @@ export default function Chat({ data }: { data: Array<{}> }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const cookies = context.req.cookies;
-  const token = cookies.token;
-  const admin = cookies.admin;
-  if (!token || admin === "true") {
+  const supabase = createClient(context);
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data) {
     return {
       redirect: {
-        permanent: false,
         destination: "/",
+        permanent: false,
       },
     };
   }
 
-  const res = await axios("http://localhost:8000/admin/models", {
+  const res = await axios(`${Base_Url}/admin/models`, {
     withCredentials: true,
   });
-  const data = res.data;
+  const Data = res.data;
   return {
-    props: { data },
+    props: { Data },
   };
 }
