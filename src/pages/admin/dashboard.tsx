@@ -3,6 +3,8 @@ import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { createClient } from "../../../utils/supabase/server-props";
 import { GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
+import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 
 export default function Dashboard() {
   return (
@@ -22,10 +24,13 @@ export default function Dashboard() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
-  const { data, error } = await supabase.auth.getUser();
-
-  if (error || !data) {
+  const session = await getServerSession(
+    context.req,
+    context.res,
+    NEXT_AUTH_CONFIG
+  );
+  console.log(session);
+  if (session == null) {
     return {
       redirect: {
         destination: "/",

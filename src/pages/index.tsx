@@ -6,18 +6,40 @@ import Banner from "@/components/appComp/Banner";
 import Models from "@/components/appComp/Models";
 import explore from "../assets/explore.svg";
 import Frequent from "../assets/Frequent.svg";
+import { GetServerSidePropsContext } from "next";
+import axios from "axios";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { useState } from "react";
 
-export default function Home() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+type Item = {
+  id: number;
+  name: string;
+  attributes: {
+    "Personality Attributes": {
+      Personality: string;
+      Occupation: string;
+      Hobbies: string;
+      Relationship: string;
+    };
+    "Physical Attributes": {
+      Body: string;
+      Age: string;
+      Ethincity: string;
+    };
+  };
+  profile_images: { [key: string]: string };
+  system_prompts: {
+    description: string;
+  };
+};
 
+export default function Home({ serverData }: { serverData: Array<Item> }) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -27,7 +49,7 @@ export default function Home() {
           <Banner />
           <br />
           <TitleBox img={explore} />
-          <Models />
+          <Models serverData={serverData} />
           <TitleBox img={Frequent} />
           <Accordion
             type="single"
@@ -90,4 +112,16 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+  const res = await axios.get(`${Base_Url}/admin/models`, {
+    withCredentials: true,
+  });
+  const serverData = res.data;
+  console.log(serverData);
+  return {
+    props: { serverData },
+  };
 }

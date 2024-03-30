@@ -1,17 +1,26 @@
 import Modal from "react-modal";
-import { useState } from "react";
+import React, { useState } from "react";
 import Heading from "./Heading";
 import InputBox from "./InputBox";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
-import { Switch } from "@/components/ui/switch";
 import { createClient } from "../../../utils/supabase/component";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-export default function LoginModal() {
+export default function LoginModal({
+  loader,
+  setLoader,
+  setcurruser,
+}: {
+  loader: boolean;
+  setcurruser: React.Dispatch<React.SetStateAction<string | null>>;
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [modalisOpen, setModalIsOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const supabase = createClient();
   const openModal = () => {
@@ -32,32 +41,28 @@ export default function LoginModal() {
   const handlePassword = (value: string) => {
     setPassword(value);
   };
-  const handleChange = () => {
-    setIsAdmin(!isAdmin);
-  };
 
   const logIn = async () => {
+    setLoader(true);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
-        console.error(error);
+        return;
       }
       const res = await axios.post(`${Base_Url}/auth/login`, {
         email,
         password,
-        isAdmin,
       });
-      localStorage.setItem(
-        "currUser",
-        isAdmin ? `A${res.data.message}` : `U${res.data.message}`
-      );
-
-      router.reload();
-    } catch (error) {
-      console.log("Error", error);
+      localStorage.setItem("currUser", `U${res.data.message}`);
+      setLoader(false);
+      setcurruser(res.data.message);
+      toast.success("Logged in successfully");
+    } catch (error: any) {
+      toast.error(error);
+      console.log("Error", error.response.data.message);
     }
   };
 
@@ -88,17 +93,7 @@ export default function LoginModal() {
             placevalue="Enter password"
             onChange={handlePassword}
           />
-          <div className="flex justify-between pt-2">
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="airplane-mode"
-                checked={isAdmin}
-                onCheckedChange={handleChange}
-              />
-              <label htmlFor="airplane-mode" className="text-xs text-black">
-                Admin?
-              </label>
-            </div>
+          <div className="flex justify-end pt-2">
             <Link href="/" className="text-xs text-[#F6883D] font-semibold">
               Forgot Password?
             </Link>
@@ -110,6 +105,7 @@ export default function LoginModal() {
             Log in
           </button>
           <BottomWarning txt="Don't have any account?" link="Signup" />
+          {loader && <p>Please wait while you are getting logged in....</p>}
         </div>
       </Modal>
     </>

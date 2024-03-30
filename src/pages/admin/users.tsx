@@ -12,6 +12,8 @@ import { GetServerSidePropsContext } from "next";
 import axios from "axios";
 import { createClient } from "../../../utils/supabase/server-props";
 import { useState } from "react";
+import { getServerSession } from "next-auth";
+import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 
 type Item = {
   id: number;
@@ -61,10 +63,13 @@ export default function Users({ serverData }: { serverData: Array<Item> }) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createClient(context);
-  const { data, error } = await supabase.auth.getUser();
+  const session = await getServerSession(
+    context.req,
+    context.res,
+    NEXT_AUTH_CONFIG
+  );
 
-  if (error || !data) {
+  if (session == null) {
     return {
       redirect: {
         destination: "/",

@@ -26,11 +26,12 @@ export default function ChatInput({
 
   const handleClick = async (e: any) => {
     e.preventDefault();
+    console.log("entered");
     if (userId === null || userId === undefined)
       return alert("Please login to continue");
     const uId = userId;
     try {
-      if (messageInput === "") return;
+      if (messageInput.trim() === "") return;
       setIsTyping(true);
       setMessages((prev: any) => [
         ...prev,
@@ -67,7 +68,7 @@ export default function ChatInput({
   };
   return (
     <form
-      className="px-4 bottom-12 text-black flex md:px-10 absolute md:bottom-4 w-full"
+      className="px-4 bottom-24 text-black flex md:px-10 absolute md:bottom-4 w-full"
       onSubmit={handleClick}
     >
       <Image src={plus} alt="plus" className="cursor-pointer" />
@@ -77,7 +78,7 @@ export default function ChatInput({
         placevalue="Enter your Message"
         onChange={handleMessage}
       />
-      <button className="" type="submit" disabled={isTyping}>
+      <button className="" type="submit">
         <Image src={send} alt="send" className="cursor-pointer"></Image>
       </button>
     </form>

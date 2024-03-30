@@ -40,9 +40,9 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
             <ChatHistory handleState={handleState} modelId={modelId} />
           </div>
         )}
-        {modelId !== null && (
+        {/* {modelId !== null && (
           <ProfileSidebar isProfileOpen={isProfileOpen} modelId={modelId} />
-        )}
+        )} */}
       </main>
     </>
   );
@@ -61,7 +61,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-
+  console.log(data);
   const res = await axios(`${Base_Url}/admin/models`, {
     withCredentials: true,
   });

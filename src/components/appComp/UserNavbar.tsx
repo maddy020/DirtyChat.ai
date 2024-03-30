@@ -14,6 +14,7 @@ import {
 } from "../ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function UserNavbar({
   isOpen,
@@ -23,6 +24,7 @@ export default function UserNavbar({
   setIsOpen: any;
 }) {
   const [currUser, setcurrUser] = useState<string | null>(null);
+  const [loader, setLoader] = useState(false);
   const supabase = createClient();
   useEffect(() => {
     let currUser = localStorage.getItem("currUser");
@@ -38,6 +40,7 @@ export default function UserNavbar({
     try {
       await supabase.auth.signOut();
       localStorage.removeItem("currUser");
+      toast.success("Logged out successfully");
       setcurrUser(null);
       router.push("/");
     } catch (error) {
@@ -65,8 +68,20 @@ export default function UserNavbar({
           className="cursor-pointe hidden md:block"
         />
 
-        {currUser === null && <LoginModal />}
-        {currUser === null && <SignupModal />}
+        {currUser === null && (
+          <LoginModal
+            setcurruser={setcurrUser}
+            setLoader={setLoader}
+            loader={loader}
+          />
+        )}
+        {currUser === null && (
+          <SignupModal
+            setcurruser={setcurrUser}
+            setLoader={setLoader}
+            loader={loader}
+          />
+        )}
         {currUser !== null && (
           <div>
             {currUser === "admin" && (

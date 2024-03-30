@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
   const router = useRouter();
   const curRoute = router.asPath;
+
   return (
     <main
       className={

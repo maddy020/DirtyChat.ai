@@ -100,7 +100,9 @@ export default function ChatHistory({
         confirmButtonText: "Yes, delete it!",
       });
       if (result.isConfirmed) {
-        await axios.delete(`${Base_Url}/user/${uId}/deleteChat/${modelId}`);
+        await axios.delete(`${Base_Url}/user/${uId}/deleteChat/${modelId}`, {
+          withCredentials: true,
+        });
         setMessages([]);
         await Swal.fire({
           title: "Deleted!",

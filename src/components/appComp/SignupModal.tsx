@@ -4,10 +4,19 @@ import Heading from "./Heading";
 import InputBox from "./InputBox";
 import { useRouter } from "next/router";
 import BottomWarning from "./BottomWarning";
+import { toast } from "react-toastify";
 import { createClient } from "../../../utils/supabase/component";
 import axios from "axios";
 
-export default function SignupModal() {
+export default function SignupModal({
+  loader,
+  setLoader,
+  setcurruser,
+}: {
+  loader: boolean;
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>;
+  setcurruser: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [modalisOpen, setModalIsOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -33,19 +42,26 @@ export default function SignupModal() {
   };
 
   const signin = async () => {
+    setLoader(true);
     try {
-      const { error, data } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({ email, password });
       if (error) {
+        toast.error(error.message);
         console.error(error);
+        return;
       }
       const user = {
         name,
         email,
         password,
       };
-      await axios.post(`${Base_Url}/auth/signup`, user);
-      router.reload();
-    } catch (error) {
+      const res = await axios.post(`${Base_Url}/auth/signup`, user);
+      setLoader(false);
+      closeModal();
+      toast.success(res.data.message);
+      router.push("/");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       console.log("ERROR", error);
     }
   };

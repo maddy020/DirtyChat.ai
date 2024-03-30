@@ -3,6 +3,7 @@ import logout from "../../assets/logout.svg";
 import user from "../../assets/user.svg";
 import usergroup from "../../assets/usergroup.svg";
 import UserAdminSidebutton from "../appComp/UserAdminSidebutton";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 export default function AdminSidebar() {
   const router = useRouter();
