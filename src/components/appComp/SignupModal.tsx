@@ -57,8 +57,8 @@ export default function SignupModal({
       };
       const res = await axios.post(`${Base_Url}/auth/signup`, user);
       setLoader(false);
-      closeModal();
       toast.success(res.data.message);
+      closeModal();
       router.push("/");
     } catch (error: any) {
       toast.error(error.response.data.message);
@@ -110,6 +110,7 @@ export default function SignupModal({
             Sign Up
           </button>
           <BottomWarning txt="Already have any account?" link="Log In" />
+          {loader && <p>Please wait while you are getting logged in....</p>}
         </div>
       </Modal>
     </>
