@@ -5,6 +5,7 @@ import Input from "./Input";
 import Image from "next/image";
 import edit from "../../assets/edit.svg";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 type Item = {
   id: number;
@@ -25,6 +26,15 @@ type Item = {
   profile_images: object;
   system_prompts: {
     description: string;
+  };
+};
+
+type dataType = {
+  expires: string;
+  token: string;
+  user: {
+    name: string;
+    email: string;
   };
 };
 export default function Add({
@@ -49,7 +59,8 @@ export default function Add({
   const descriptionref = useRef<HTMLInputElement>(null);
 
   const [files, setFiles] = useState<(File | null)[]>([]);
-
+  const session = useSession();
+  const adminData: dataType = session.data;
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const images = e.target.files;
     if (!images) return alert("No images selected");
@@ -95,9 +106,11 @@ export default function Add({
           formData.append("files", file);
         }
       });
+
       const result = await axios.post(`${Base_Url}/admin/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${adminData.token}`,
         },
       });
       if (Data.length === 0) setData([result.data.data]);
@@ -111,7 +124,11 @@ export default function Add({
 
   const deleteModal = async () => {
     try {
-      await axios.delete(`${Base_Url}/admin/delete/${item?.id}`);
+      await axios.delete(`${Base_Url}/admin/delete/${item?.id}`, {
+        headers: {
+          Authorization: `Bearer ${adminData.token}`,
+        },
+      });
       setData(Data.filter((data) => data.id !== item?.id));
       closeModal();
     } catch (error) {

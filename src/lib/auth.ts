@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { SupabaseAdapter } from "@next-auth/supabase-adapter";
 import { createClient } from "@supabase/supabase-js";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
@@ -37,7 +38,7 @@ export const NEXT_AUTH_CONFIG: NextAuthOptions = {
         return {
           id: admin.data[0].id,
           email: admin.data[0].email,
-          name: admin.data[0].name,
+          name: admin.data[0].username,
         };
       },
     }),
@@ -63,12 +64,24 @@ export const NEXT_AUTH_CONFIG: NextAuthOptions = {
   //     },
   //   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  // secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
     session: ({ session, token, user }: any) => {
-      session.user.id = token.sub;
+      const payload = {
+        aud: "authenticated",
+        exp: Math.floor(new Date(session.expires).getTime() / 1000),
+        sub: token.sub,
+        name: token.name,
+        email: token.email,
+        role: "authenticated",
+      };
+      session.token = jwt.sign(payload, process.env.NEXTAUTH_SECRET as string);
+      console.log(session);
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl + "/admin/dashboard";
     },
   },
 };

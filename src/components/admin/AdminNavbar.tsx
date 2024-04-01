@@ -13,11 +13,12 @@ import {
 
 import { signOut } from "next-auth/react";
 
-export default function AdminNavbar({ isOpen, setIsOpen }: any) {
+export default function AdminNavbar({ name }: { name: string }) {
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
+      console.log("heere");
       signOut();
       router.push("/api/auth/signin");
     } catch (error) {
@@ -39,7 +40,7 @@ export default function AdminNavbar({ isOpen, setIsOpen }: any) {
                   className="border-white border-2 rounded-full h-9 w-9 cursor-pointer"
                 />
                 <div className="flex flex-col items-start">
-                  <p className="text-sm">Name Name</p>
+                  <p className="text-sm">{name}</p>
                   <p className="text-xs">Admin</p>
                 </div>
                 <Image src={dropdown} alt="i" />

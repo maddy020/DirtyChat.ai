@@ -13,9 +13,9 @@ import Add from "@/components/admin/Add";
 import { GetServerSidePropsContext } from "next";
 import axios from "axios";
 import { useState } from "react";
-import { createClient } from "../../../utils/supabase/server-props";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
+
 type Item = {
   id: number;
   name: string;
@@ -40,14 +40,16 @@ type Item = {
 
 export default function Characters({
   serverData,
+  AdminData,
 }: {
   serverData: Array<Item>;
+  AdminData: string;
 }) {
   const [Data, setData] = useState(serverData);
 
   return (
     <>
-      <AdminNavbar />
+      <AdminNavbar name={AdminData} />
       <AdminSidebar />
       <div className="ml-64 mt-20 pt-8 pr-10">
         <div className="flex w-full justify-between pb-4">
@@ -68,7 +70,7 @@ export default function Characters({
                 {Data.map((item: Item) => {
                   return (
                     <>
-                      <TableRow>
+                      <TableRow key={item.id}>
                         <TableCell>
                           <Image
                             src={item.profile_images["0"]}
@@ -96,26 +98,31 @@ export default function Characters({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getServerSession(
+  type sessionType = {
+    user: {
+      name: string;
+    };
+    token: string;
+    expires: string;
+  };
+  const session: sessionType | null = await getServerSession(
     context.req,
     context.res,
     NEXT_AUTH_CONFIG
   );
-
-  if (session == null) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
+  if (!session) {
+    return {};
   }
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const res = await axios.get(`${Base_Url}/admin/models`, {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${session.token}`,
+    },
   });
+
+  const AdminData = session.user.name;
   const serverData = res.data;
   return {
-    props: { serverData },
+    props: { serverData, AdminData },
   };
 }

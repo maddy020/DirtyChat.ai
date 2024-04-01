@@ -3,6 +3,7 @@ import logout from "../../assets/logout.svg";
 import user from "../../assets/user.svg";
 import usergroup from "../../assets/usergroup.svg";
 import UserAdminSidebutton from "../appComp/UserAdminSidebutton";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 export default function AdminSidebar() {
@@ -39,13 +40,12 @@ export default function AdminSidebar() {
           />
         </div>
         <div className="hidden md:flex md:flex-col md:gap-8 md:w-full md:px-4">
-          <UserAdminSidebutton
-            isOpen={true}
-            img={logout}
-            text="Signout"
-            href="/"
-            isActive={false}
-          />
+          <button onClick={() => signOut()}>
+            <a className="flex gap-2 cursor-pointer w-full  py-2 ">
+              <Image src={logout} alt="img" width={24} height={24} />
+              <h2>Sign Out</h2>
+            </a>
+          </button>
         </div>
       </div>
     </main>

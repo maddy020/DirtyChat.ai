@@ -7,6 +7,7 @@ import Models from "@/components/appComp/Models";
 import explore from "../assets/explore.svg";
 import Frequent from "../assets/Frequent.svg";
 import { GetServerSidePropsContext } from "next";
+
 import axios from "axios";
 import {
   Accordion,
@@ -40,6 +41,7 @@ type Item = {
 
 export default function Home({ serverData }: { serverData: Array<Item> }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -120,7 +122,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     withCredentials: true,
   });
   const serverData = res.data;
-  console.log(serverData);
   return {
     props: { serverData },
   };

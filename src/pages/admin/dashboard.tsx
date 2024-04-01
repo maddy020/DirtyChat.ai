@@ -1,15 +1,14 @@
 import CardAdmin from "@/components/admin/CardAdmin";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
-import { createClient } from "../../../utils/supabase/server-props";
 import { GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 
-export default function Dashboard() {
+export default function Dashboard({ data }: { data: string }) {
   return (
     <>
-      <AdminNavbar />
+      <AdminNavbar name={data} />
       <AdminSidebar />
       <div className="ml-60 mt-28 h-[80vh] flex flex-col justify-start gap-8 px-8">
         <h1 className="text-3xl font-semibold">Dashboard</h1>
@@ -29,16 +28,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     context.res,
     NEXT_AUTH_CONFIG
   );
-  console.log(session);
-  if (session == null) {
+
+  if (!session) {
     return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+      props: {},
     };
   }
+  const data = session.user.name;
   return {
-    props: {},
+    props: { data },
   };
 }

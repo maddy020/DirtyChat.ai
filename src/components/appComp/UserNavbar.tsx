@@ -15,7 +15,6 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
-
 export default function UserNavbar({
   isOpen,
   setIsOpen,

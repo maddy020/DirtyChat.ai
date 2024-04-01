@@ -2,8 +2,11 @@ import axios from "axios";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next";
+import { NEXT_AUTH_CONFIG } from "@/lib/auth";
 
-const Login = () => {
+export default function Login() {
   const emailref = useRef(null);
   const passwordref = useRef(null);
   const router = useRouter();
@@ -44,6 +47,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-
-export default Login;
+}

@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import InputBox from "./InputBox";
 import Link from "next/link";
@@ -31,7 +31,6 @@ export default function LoginModal({
     setModalIsOpen(false);
   };
 
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -52,10 +51,16 @@ export default function LoginModal({
       if (error) {
         return;
       }
-      const res = await axios.post(`${Base_Url}/auth/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${Base_Url}/auth/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       localStorage.setItem("currUser", `U${res.data.message}`);
       setLoader(false);
       setcurruser(res.data.message);
