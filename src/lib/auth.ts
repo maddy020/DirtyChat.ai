@@ -76,8 +76,11 @@ export const NEXT_AUTH_CONFIG: NextAuthOptions = {
         email: token.email,
         role: "authenticated",
       };
-      session.token = jwt.sign(payload, process.env.NEXTAUTH_SECRET as string);
-      console.log(session);
+      session.supabaseAccessToken = jwt.sign(
+        payload,
+        process.env.NEXTAUTH_SECRET as string
+      );
+      console.log(process.env.NEXTAUTH_SECRET);
       return session;
     },
     async redirect({ url, baseUrl }) {

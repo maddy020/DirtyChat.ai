@@ -59,8 +59,8 @@ export default function Add({
   const descriptionref = useRef<HTMLInputElement>(null);
 
   const [files, setFiles] = useState<(File | null)[]>([]);
-  const session = useSession();
-  const adminData: dataType = session.data;
+  const { data: session, status } = useSession();
+  console.log(session);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const images = e.target.files;
     if (!images) return alert("No images selected");
@@ -110,7 +110,7 @@ export default function Add({
       const result = await axios.post(`${Base_Url}/admin/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${adminData.token}`,
+          Authorization: `Bearer ${session?.supabaseAccessToken}`,
         },
       });
       if (Data.length === 0) setData([result.data.data]);
@@ -126,7 +126,7 @@ export default function Add({
     try {
       await axios.delete(`${Base_Url}/admin/delete/${item?.id}`, {
         headers: {
-          Authorization: `Bearer ${adminData.token}`,
+          Authorization: `Bearer ${session?.supabaseAccessToken}`,
         },
       });
       setData(Data.filter((data) => data.id !== item?.id));
