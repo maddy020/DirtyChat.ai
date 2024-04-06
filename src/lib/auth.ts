@@ -80,11 +80,10 @@ export const NEXT_AUTH_CONFIG: NextAuthOptions = {
         payload,
         process.env.NEXTAUTH_SECRET as string
       );
-      console.log(process.env.NEXTAUTH_SECRET);
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      return baseUrl + "/admin/dashboard";
-    },
+    // async redirect({ url, baseUrl }) {
+    //   return baseUrl + "/admin/dashboard";
+    // },
   },
 };

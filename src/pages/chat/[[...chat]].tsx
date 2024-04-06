@@ -1,23 +1,33 @@
 import UserNavbar from "@/components/appComp/UserNavbar";
 import UserSidebar from "@/components/appComp/UserSidebar";
-import Contacts from "../components/appComp/Contacts";
+import Contacts from "../../components/appComp/Contacts";
 import ChatHistory from "@/components/appComp/ChatHistory";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ProfileSidebar from "@/components/appComp/ProfileSidebar";
-import type { User } from "@supabase/supabase-js";
 import type { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 
-import { createClient } from "../../utils/supabase/server-props";
+import { createClient } from "../../../utils/supabase/server-props";
 
 export default function Chat({ Data }: { Data: Array<{}> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [modelId, setModelId] = useState(null);
+  const [modelId, setModelId] = useState<number | null>(null);
   const handleState = () => {
     setIsProfileOpen(!isProfileOpen);
   };
-
+  const router = useRouter();
+  const path = router.asPath;
+  useEffect(() => {
+    async function getModelId() {
+      const modelNumString = path.split("/")[2];
+      const modelNum =
+        modelNumString === undefined ? null : parseInt(modelNumString);
+      setModelId(modelNum);
+    }
+    getModelId();
+  }, [path]);
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -40,9 +50,9 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
             <ChatHistory handleState={handleState} modelId={modelId} />
           </div>
         )}
-        {/* {modelId !== null && (
+        {modelId !== null && (
           <ProfileSidebar isProfileOpen={isProfileOpen} modelId={modelId} />
-        )} */}
+        )}
       </main>
     </>
   );
@@ -52,7 +62,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createClient(context);
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const { data, error } = await supabase.auth.getUser();
-
   if (error || !data) {
     return {
       redirect: {
@@ -61,7 +70,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   }
-  console.log(data);
   const res = await axios(`${Base_Url}/admin/models`, {
     withCredentials: true,
   });
