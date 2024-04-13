@@ -7,7 +7,7 @@ import MessageBox from "./MessageBox";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { useRouter } from "next/navigation";
 export default function ChatHistory({
   handleState,
   modelId,
@@ -19,6 +19,7 @@ export default function ChatHistory({
     name: string;
     profile_images: { [key: string]: string };
   }
+  const router = useRouter();
   const userId = localStorage.getItem("currUser")?.slice(1);
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [messages, setMessages] = useState([]);
@@ -116,19 +117,25 @@ export default function ChatHistory({
   };
 
   return (
-    <div className="w-full">
-      <div className="flex pt-8 items-center pl-10 justify-between">
-        <div className="flex gap-8">
+    <>
+      <div className="flex  items-center justify-between">
+        <div className="flex justify-between items-center">
+          <button
+            className="block md:hidden"
+            onClick={() => router.push("/chat")}
+          >
+            <Image src={arrow} alt="back" className="rotate-180" />
+          </button>
           <Image
             src={model?.profile_images["2"] ?? user}
             alt="avatar"
-            width={60}
-            height={60}
+            width={40}
+            height={40}
             className="rounded-full"
           />
           {model && <h1>{model.name}</h1>}
         </div>
-        <div>
+        <div className="flex ">
           <button disabled={messages.length == 0}>
             <Image
               src={delet}
@@ -155,6 +162,6 @@ export default function ChatHistory({
           modelId={modelId}
         />
       )}
-    </div>
+    </>
   );
 }

@@ -23,7 +23,7 @@ export default function MessageBox({
 
   return (
     <div
-      className="px-4 max-h-[23rem]  flex flex-col gap-10 md:px-10 overflow-scroll scrollbar-hide"
+      className=" h-full flex flex-col gap-10 md:px-10 overflow-scroll scrollbar-hide"
       ref={scrollRef}
     >
       {messages.map((msg, ind) =>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import edit from "../../assets/edit.svg";
 import searchIcon from "../../assets/searchIcon.svg";
 import ChatProfile from "@/components/appComp/ChatProfile";
+import { useRouter } from "next/router";
 import { useState } from "react";
 export default function Contacts({
   data,
@@ -12,21 +13,20 @@ export default function Contacts({
   modelId: number | null;
   setModelId: any;
 }) {
+  const router = useRouter();
   const handleClick = (item: any, id: number) => {
     setModelId(item.id);
     setSelectedId(id);
+    router.push(`/chat/${item.id}`);
   };
   const [selectedId, setSelectedId] = useState<number | null>(null);
   return (
-    <div
-      className=" md:p-6 flex flex-col justify-start 
-      gap-8 md:border-r border-[#494747] h-full "
-    >
-      <div className="flex flex-row justify-between">
+    <>
+      <div className="flex flex-row justify-between pb-1">
         <h1 className="text-2xl font-bold">Chats</h1>
         <Image src={edit} alt="img" className="cursor-pointer" />
       </div>
-      <div className="relative">
+      <div className="relative h-full md:h-[555px]   ">
         <Image
           src={searchIcon}
           alt="search"
@@ -36,7 +36,7 @@ export default function Contacts({
           type="text"
           className="bg-[#494747] p-2 rounded-full w-full px-10 text-lg font-semibold outline-none border-none"
         />
-        <ul className="w-full pt-6 flex flex-col justify-start cursor-pointer max-h-[26rem] overflow-y-scroll scrollbar-hide ">
+        <ul className="w-full h-4/5 md:h-[510px] xl:h-[600px]  pt-6 flex flex-col justify-start cursor-pointer overflow-y-scroll scrollbar-hide">
           {data.map((item, id) => {
             return (
               <li key={id} onClick={() => handleClick(item, id)}>
@@ -46,6 +46,6 @@ export default function Contacts({
           })}
         </ul>
       </div>
-    </div>
+    </>
   );
 }

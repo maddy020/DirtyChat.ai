@@ -21,7 +21,7 @@ export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
           : "border-t bg-[#121212] z-10 pt-3 w-full px-2 fixed bottom-0  md:w-[75px] flex md:flex-col items-center  md:mt-[4.4rem] md:h-[91.7vh] md:justify-between md:py-6  md:top-0 md:left-0 md:overflow-hidden transition-all duration-400 ease-in md:border-r md:border-[#393646]"
       }
     >
-      <div className=" flex flex-row gap-1 md:flex-col w-full">
+      <div className=" flex flex-row justify-between gap-1 md:flex-col w-full">
         <UserAdminSidebutton
           img={home}
           text="Home"
@@ -50,20 +50,22 @@ export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
           isOpen={isOpen}
           isActive={curRoute === "/premium"}
         />
-        <UserAdminSidebutton
-          img={token}
-          text="Tokens"
-          href="/"
-          isOpen={isOpen}
-          isActive={curRoute === ""}
-        />
-        <UserAdminSidebutton
-          img={fire}
-          text="Streak"
-          href="/"
-          isOpen={isOpen}
-          isActive={curRoute === ""}
-        />
+        <div className="hidden md:block">
+          <UserAdminSidebutton
+            img={token}
+            text="Tokens"
+            href="/"
+            isOpen={isOpen}
+            isActive={curRoute === ""}
+          />
+          <UserAdminSidebutton
+            img={fire}
+            text="Streak"
+            href="/"
+            isOpen={isOpen}
+            isActive={curRoute === ""}
+          />
+        </div>
       </div>
       <div className="hidden md:flex md:flex-col md:gap-2 md:w-full md:px-4">
         <UserAdminSidebutton

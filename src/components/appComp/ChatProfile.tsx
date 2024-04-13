@@ -11,7 +11,7 @@ export default function ChatProfiile({
     <div
       className={`${
         isClicked ? "bg-[#323131]" : ""
-      } flex flex-row w-full  hover:bg-[#494747]  p-4 rounded-xl items-center gap-2`}
+      } flex flex-row w-full  hover:bg-[#494747] py-3 px-2 md:rounded-xl items-center justify-around `}
     >
       <Image
         src={item.profile_images["2"]}

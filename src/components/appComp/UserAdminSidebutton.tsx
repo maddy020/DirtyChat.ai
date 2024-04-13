@@ -23,7 +23,13 @@ export default function UserAdminSidebutton({
         } md:gap-2 cursor-pointer w-full rounded-xl  py-2 `}
       >
         <Image src={img} alt="img" />
-        <h2 className={` ${isOpen ? "" : "hidden"}`}>{text}</h2>
+        <h2
+          className={` ${
+            isOpen ? "" : "px-4 text-sm font-semibold md:hidden md:text:lg"
+          }`}
+        >
+          {text}
+        </h2>
       </a>
     </button>
   );
