@@ -41,7 +41,7 @@ export default function SignupModal({
     setPassword(value);
   };
 
-  const signin = async () => {
+  const signup = async () => {
     setLoader(true);
     try {
       const { error } = await supabase.auth.signUp({ email, password });
@@ -61,8 +61,8 @@ export default function SignupModal({
       closeModal();
       router.push("/");
     } catch (error: any) {
-      toast.error(error.response.data.message);
       console.log("ERROR", error);
+      toast.error("Error in sign up", error.response.data.message);
     }
   };
 
@@ -104,7 +104,7 @@ export default function SignupModal({
           />
 
           <button
-            onClick={signin}
+            onClick={signup}
             className="bg-gradient-to-r from-orange-400 to-red-600 px-5 rounded-full py-2 w-full text-white font-semibold"
           >
             Sign Up
