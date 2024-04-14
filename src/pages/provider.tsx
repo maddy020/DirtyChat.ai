@@ -9,6 +9,10 @@ if (typeof window !== "undefined") {
     api_host: host,
   });
 }
-export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
+export default function CSPostHogProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 }
