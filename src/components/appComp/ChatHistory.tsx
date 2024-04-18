@@ -25,7 +25,6 @@ export default function ChatHistory({
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [model, setModel] = useState<modelType | null>(null);
-  const [token, setToken] = useState<number | null>(null);
 
   useEffect(() => {
     async function getModel() {
@@ -40,23 +39,6 @@ export default function ChatHistory({
     }
     getModel();
   }, [modelId, Base_Url]);
-
-  useEffect(() => {
-    async function gettoken() {
-      try {
-        if (userId === null || userId === undefined)
-          return alert("Please login to continue");
-        const uId = userId;
-        const res = await axios.get(`${Base_Url}/user/getToken/${uId}`, {
-          withCredentials: true,
-        });
-        setToken(res.data.token);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    gettoken();
-  }, [userId, Base_Url]);
 
   useEffect(() => {
     async function getMessages() {
@@ -153,15 +135,13 @@ export default function ChatHistory({
         </div>
       </div>
       <MessageBox messages={messages} isTyping={isTyping} />
-      {token === 0 && <div>Request Tokens</div>}
-      {token !== 0 && (
-        <ChatInput
-          setMessages={setMessages}
-          setIsTyping={setIsTyping}
-          isTyping={isTyping}
-          modelId={modelId}
-        />
-      )}
+
+      <ChatInput
+        setMessages={setMessages}
+        setIsTyping={setIsTyping}
+        isTyping={isTyping}
+        modelId={modelId}
+      />
     </>
   );
 }

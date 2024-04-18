@@ -65,6 +65,9 @@ export default function LoginModal({
       setLoader(false);
       setcurruser(res.data.message);
       toast.success("Logged in successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (error: any) {
       toast.error(error);
       console.log("Error", error.response.data.message);

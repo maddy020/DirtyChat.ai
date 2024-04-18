@@ -42,9 +42,9 @@ export default function Card({ item }: { item: Item }) {
               25
             </h1>
           </div>
-          <h2 className=" text-base font-semibold md:text-sm md:font-semibold">
+          {/* <h2 className=" text-base font-semibold md:text-sm md:font-semibold">
             {item.system_prompts.description}
-          </h2>
+          </h2> */}
         </div>
       </div>
     </div>

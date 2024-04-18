@@ -83,9 +83,6 @@ export default function UserNavbar({
         )}
         {currUser !== null && (
           <div>
-            {currUser === "admin" && (
-              <Link href="/admin/dashboard">Dashboard</Link>
-            )}
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Image
@@ -96,7 +93,7 @@ export default function UserNavbar({
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#121212] rounded-xl absolute right-2 z-20">
                 <DropdownMenuLabel className="cursor-pointer">
-                  My Account
+                  <Link href="/account">My Account</Link>
                 </DropdownMenuLabel>
                 <DropdownMenuLabel
                   className="cursor-pointer"

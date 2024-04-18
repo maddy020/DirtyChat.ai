@@ -8,7 +8,7 @@ import { Arrow } from "@radix-ui/react-dropdown-menu";
 import ProfileSidebar from "@/components/appComp/ProfileSidebar";
 import type { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-
+import TokenModal from "@/components/appComp/TokenModal";
 import { createClient } from "../../../utils/supabase/server-props";
 
 export default function Chat({ Data }: { Data: Array<{}> }) {
@@ -29,11 +29,34 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
     }
     getModelId();
   }, [path]);
+
+  const [token, setToken] = useState<number>(0);
+
+  useEffect(() => {
+    async function gettoken() {
+      try {
+        const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+        const userId = localStorage.getItem("currUser")?.slice(1);
+        if (userId === null || userId === undefined)
+          return alert("Please login to continue");
+        const uId = userId;
+        const res = await axios.get(`${Base_Url}/user/getToken/${uId}`, {
+          withCredentials: true,
+        });
+        setToken(res.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    gettoken();
+  });
+
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <UserSidebar isOpen={isOpen} />
+      <UserSidebar isOpen={isOpen} token={token} />
       <main className="pt-24 relative h-[100vh] md:pl-20 md:pt-20 md:flex">
+        <TokenModal token={token} />
         <div
           className={`${
             modelId !== null ? "hidden" : ""

@@ -7,7 +7,7 @@ import Models from "@/components/appComp/Models";
 import explore from "../assets/explore.svg";
 import Frequent from "../assets/Frequent.svg";
 import { GetServerSidePropsContext } from "next";
-
+import TokenModal from "@/components/appComp/TokenModal";
 import axios from "axios";
 import {
   Accordion,
@@ -15,7 +15,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Item = {
   id: number;
@@ -41,16 +41,39 @@ type Item = {
 
 export default function Home({ serverData }: { serverData: Array<Item> }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [token, setToken] = useState<number>(0);
+  const [userId, setUserId] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function gettoken() {
+      try {
+        const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+        const userId = localStorage.getItem("currUser")?.slice(1);
+        if (userId === null || userId === undefined) return;
+        const uId = userId;
+        const res = await axios.get(`${Base_Url}/user/getToken/${uId}`, {
+          withCredentials: true,
+        });
+        setUserId(uId);
+        setToken(res.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    gettoken();
+  }, [userId]);
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <UserSidebar isOpen={isOpen} />
+      <UserSidebar isOpen={isOpen} token={token} />
       <main className="w-full px-5 mt-20">
+        {userId !== null && <TokenModal token={token} />}
         <div className=" md:pl-[130px]  md:h-full md:flex md:flex-col md:justify-start ">
           <Banner />
           <br />
-          <TitleBox img={explore} />
+          <div id="chat">
+            <TitleBox img={explore} />
+          </div>
           <Models serverData={serverData} />
           <TitleBox img={Frequent} />
           <Accordion

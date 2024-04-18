@@ -98,9 +98,6 @@ export default function ProfileSidebar({
           </Carousel>
           <div className="text-white p-4 ">
             <h1 className="text-lg font-bold">{model.name}</h1>
-            <p className="text-sm font-semibold">
-              {model.system_prompts.description}
-            </p>
           </div>
           <hr />
 

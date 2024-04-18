@@ -2,14 +2,20 @@ import home from "../../assets/home.svg";
 import group from "../../assets/group.svg";
 import discord from "../../assets/discord.svg";
 import fire from "../../assets/fire.svg";
-import token from "../../assets/token.svg";
+import Token from "../../assets/token.svg";
 import message from "../../assets/message.svg";
 import star from "../../assets/star.svg";
 import user from "../../assets/user.svg";
 import UserAdminSidebutton from "./UserAdminSidebutton";
 import { useRouter } from "next/router";
 
-export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
+export default function UserSidebar({
+  isOpen,
+  token,
+}: {
+  isOpen: boolean;
+  token: number;
+}) {
   const router = useRouter();
   const curRoute = router.asPath;
 
@@ -27,41 +33,41 @@ export default function UserSidebar({ isOpen }: { isOpen: boolean }) {
           text="Home"
           href="/"
           isOpen={isOpen}
-          isActive={curRoute === "/"}
+          isActive={curRoute === "/" || curRoute.startsWith("/#")}
         />
         <UserAdminSidebutton
           img={message}
           text="Chats"
           href="/chat"
           isOpen={isOpen}
-          isActive={curRoute === "/chat"}
+          isActive={curRoute === "/chat" || curRoute.startsWith("/chat")}
         />
         <UserAdminSidebutton
           img={user}
           text="Account"
-          href="/"
+          href="/account"
           isOpen={isOpen}
           isActive={curRoute === "/account"}
         />
         <UserAdminSidebutton
           img={star}
           text="Premium"
-          href="/"
+          href="/premium"
           isOpen={isOpen}
           isActive={curRoute === "/premium"}
         />
         <div className="hidden md:block">
           <UserAdminSidebutton
-            img={token}
-            text="Tokens"
-            href="/"
+            img={Token}
+            text={`Tokens : ${token}`}
+            href="#"
             isOpen={isOpen}
             isActive={curRoute === ""}
           />
           <UserAdminSidebutton
             img={fire}
             text="Streak"
-            href="/"
+            href="#"
             isOpen={isOpen}
             isActive={curRoute === ""}
           />
