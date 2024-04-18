@@ -56,6 +56,7 @@ export default function Home({ serverData }: { serverData: Array<Item> }) {
         });
         setUserId(uId);
         setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
       } catch (error) {
         console.log(error);
       }

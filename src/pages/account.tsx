@@ -1,14 +1,24 @@
 import UserSidebar from "@/components/appComp/UserSidebar";
 import user from "../assets/user.svg";
 import Image from "next/image";
+import axios from "axios";
 import UserNavbar from "@/components/appComp/UserNavbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function Account() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [token, setToken] = useState<number>(0);
+
+  useEffect(() => {
+    const t = localStorage.getItem("token");
+    if (t) {
+      setToken(parseInt(t));
+    }
+  }, []);
+
   return (
     <>
       <UserNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <UserSidebar isOpen={isOpen} />
+      <UserSidebar isOpen={isOpen} token={token} />
       <main className="pt-16 h-[90vh] px-6">
         <div className="flex flex-col items-center gap-6 py-6 ">
           <h1 className="text-xl font-semibold">My Account</h1>
