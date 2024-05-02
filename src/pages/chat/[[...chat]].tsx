@@ -14,7 +14,9 @@ import { createClient } from "../../../utils/supabase/server-props";
 export default function Chat({ Data }: { Data: Array<{}> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [modelId, setModelId] = useState<number | null>(null);
+  const [modelId, setModelId] = useState<string | null>(null);
+  const [token, setToken] = useState<number>(0);
+
   const handleState = () => {
     setIsProfileOpen(!isProfileOpen);
   };
@@ -23,14 +25,11 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
   useEffect(() => {
     async function getModelId() {
       const modelNumString = path.split("/")[2];
-      const modelNum =
-        modelNumString === undefined ? null : parseInt(modelNumString);
-      setModelId(modelNum);
+      setModelId(modelNumString);
+      console.log("modelNumString", modelNumString);
     }
     getModelId();
   }, [path]);
-
-  const [token, setToken] = useState<number>(0);
 
   useEffect(() => {
     async function gettoken() {
@@ -49,7 +48,7 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
       }
     }
     gettoken();
-  });
+  }, [token]);
 
   return (
     <>
@@ -59,7 +58,7 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
         <TokenModal token={token} />
         <div
           className={`${
-            modelId !== null ? "hidden" : ""
+            modelId !== undefined ? "hidden" : ""
           } h-[75.5vh] px-6 md:px-4 md:py-2 flex flex-col justify-between 
           md:border-r border-[#494747] md:block md:w-3/5 lg:w-1/3  md:h-full`}
         >
@@ -70,9 +69,13 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
             Welcome to chat section
           </div>
         )}
-        {modelId !== null && (
-          <div className="w-full px-2 md:w-3/4 md:relative h-[500px] md:h-[590px] xl:h-[685px] flex flex-col justify-between ">
-            <ChatHistory handleState={handleState} modelId={modelId} />
+        {modelId !== undefined && (
+          <div className="w-full px-2 md:w-3/4 md:relative h-[90%] md:h-[98%] flex flex-col justify-between ">
+            <ChatHistory
+              handleState={handleState}
+              modelId={modelId}
+              setToken={setToken}
+            />
           </div>
         )}
         {modelId !== null && (

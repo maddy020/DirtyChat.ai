@@ -14,7 +14,7 @@ export default function ChatInput({
   setMessages: any;
   setIsTyping: any;
   isTyping: boolean;
-  modelId: number | null;
+  modelId: string | null;
 }) {
   const [messageInput, setMessageInput] = useState("");
 

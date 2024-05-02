@@ -45,26 +45,6 @@ export default function Models({ serverData }: { serverData: Array<Item> }) {
           </div>
         );
       })}
-      {/* <Card item={serverData[0]} />
-
-      <Card item={serverData[0]} />
-
-      <Card item={serverData[0]} />
-
-      <Card item={serverData[0]} />
-
-      <div className="hidden md:block">
-        <Card item={serverData[0]} />
-      </div>
-      <div className="hidden md:block">
-        <Card item={serverData[0]} />
-      </div>
-      <div className="hidden md:block">
-        <Card item={serverData[0]} />
-      </div>
-      <div className="hidden md:block">
-        <Card item={serverData[0]} />
-      </div> */}
     </div>
   );
 }

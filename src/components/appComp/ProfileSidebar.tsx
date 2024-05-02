@@ -15,7 +15,7 @@ export default function ProfileSidebar({
   setIsProfileOpen,
 }: {
   isProfileOpen: boolean;
-  modelId: Number | null;
+  modelId: string | null;
   setIsProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   interface SystemPrompts {
@@ -48,7 +48,6 @@ export default function ProfileSidebar({
       try {
         const res = await axios.get(`${Base_Url}/user/model/${modelId}`);
         setModel(res.data);
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }

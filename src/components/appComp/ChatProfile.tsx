@@ -6,7 +6,6 @@ export default function ChatProfiile({
   item: any;
   isClicked: boolean;
 }) {
-  console.log(item);
   return (
     <div
       className={`${

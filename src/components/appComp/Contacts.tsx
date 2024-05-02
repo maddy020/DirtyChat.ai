@@ -10,7 +10,7 @@ export default function Contacts({
   setModelId,
 }: {
   data: Array<{}>;
-  modelId: number | null;
+  modelId: string | null;
   setModelId: any;
 }) {
   const router = useRouter();

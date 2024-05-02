@@ -2,10 +2,10 @@ import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
 import Sad from "../../assets/Sad.svg";
-export default function TokenModal({ token }: { token: number | null }) {
+export default function TokenModal({ token }: { token: number }) {
   return (
     <>
-      {token === 0 && (
+      {token <= 0 && (
         <>
           <Modal
             isOpen={true}
