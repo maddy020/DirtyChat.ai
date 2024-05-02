@@ -71,11 +71,7 @@ export default function Chat({ Data }: { Data: Array<{}> }) {
         )}
         {modelId !== undefined && (
           <div className="w-full px-2 md:w-3/4 md:relative h-[90%] md:h-[98%] flex flex-col justify-between ">
-            <ChatHistory
-              handleState={handleState}
-              modelId={modelId}
-              setToken={setToken}
-            />
+            <ChatHistory handleState={handleState} modelId={modelId} />
           </div>
         )}
         {modelId !== null && (

@@ -11,18 +11,16 @@ import { useRouter } from "next/navigation";
 export default function ChatHistory({
   handleState,
   modelId,
-  setToken,
 }: {
   handleState: () => void;
   modelId: string | null;
-  setToken: React.Dispatch<React.SetStateAction<number>>;
 }) {
   interface modelType {
     name: string;
     profile_images: { [key: string]: string };
   }
   const router = useRouter();
-  const userId = localStorage.getItem("currUser")?.slice(1);
+  const [userId, setUserId] = useState<string>("");
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -44,6 +42,8 @@ export default function ChatHistory({
 
   useEffect(() => {
     async function getMessages() {
+      const userid = localStorage.getItem("currUser")?.slice(1) as string;
+      setUserId(userid);
       try {
         if (userId === null || userId === undefined)
           return alert("Please login to continue");
@@ -142,6 +142,7 @@ export default function ChatHistory({
         setIsTyping={setIsTyping}
         isTyping={isTyping}
         modelId={modelId}
+        userId={userId}
       />
     </>
   );

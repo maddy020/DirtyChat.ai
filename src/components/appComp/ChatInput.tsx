@@ -10,15 +10,16 @@ export default function ChatInput({
   setIsTyping,
   isTyping,
   modelId,
+  userId,
 }: {
   setMessages: any;
   setIsTyping: any;
   isTyping: boolean;
   modelId: string | null;
+  userId: string | null;
 }) {
   const [messageInput, setMessageInput] = useState("");
 
-  const userId = localStorage.getItem("currUser")?.slice(1);
   const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
 
   const handleMessage = (value: string) => {
