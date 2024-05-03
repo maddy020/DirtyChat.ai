@@ -47,8 +47,7 @@ export default function ChatHistory({
       try {
         if (userId === null || userId === undefined)
           return alert("Please login to continue");
-        const uId = userId;
-
+        const uId = userid;
         const res = await axios.get(
           `${Base_Url}/user/getMessages/${uId}/${modelId}`,
           {
@@ -57,7 +56,7 @@ export default function ChatHistory({
         );
         setMessages(res.data);
       } catch (error) {
-        console.log(error);
+        console.log("Error in getting messages", error);
       }
     }
     if (modelId !== null) {
