@@ -1,9 +1,5 @@
-import InputBox from "./InputBox";
 import { useState } from "react";
-import Image from "next/image";
 import axios from "axios";
-import plus from "../../assets/plus.svg";
-import send from "../../assets/send.svg";
 
 export default function ChatInput({
   setMessages,
@@ -11,12 +7,14 @@ export default function ChatInput({
   isTyping,
   modelId,
   userId,
+  setToken,
 }: {
   setMessages: any;
   setIsTyping: any;
   isTyping: boolean;
   modelId: string | null;
   userId: string | null;
+  setToken: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [messageInput, setMessageInput] = useState("");
 
@@ -63,6 +61,7 @@ export default function ChatInput({
           content: res.data.message,
         },
       ]);
+      setToken((prev: number) => prev - 1);
       setIsTyping(false);
     } catch (error) {
       console.log(error);

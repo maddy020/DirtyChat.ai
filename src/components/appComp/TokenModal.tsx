@@ -2,7 +2,10 @@ import Modal from "react-modal";
 import Image from "next/image";
 import Link from "next/link";
 import Sad from "../../assets/Sad.svg";
+import { useState } from "react";
+import RequestModal from "./requestModal";
 export default function TokenModal({ token }: { token: number }) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       {token <= 0 && (
@@ -20,11 +23,7 @@ export default function TokenModal({ token }: { token: number }) {
                 <p>Take a moment to earn more by completing a survey.</p>
               </div>
             </div>
-            <div className="flex flex-col px-8 pt-8 gap-3 justify-between">
-              <button className="bg-gradient-to-r from-orange-400 to-red-600 px-5 rounded-full py-2 w-full text-white font-semibold">
-                <Link href="/requesttoken">Fill this survey form</Link>
-              </button>
-            </div>
+            <RequestModal isOpen={isOpen} setIsOpen={setIsOpen} />
           </Modal>
         </>
       )}

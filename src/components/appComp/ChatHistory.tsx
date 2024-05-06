@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 export default function ChatHistory({
   handleState,
   modelId,
+  setToken,
 }: {
   handleState: () => void;
   modelId: string | null;
+  setToken: React.Dispatch<React.SetStateAction<number>>;
 }) {
   interface modelType {
     name: string;
@@ -142,6 +144,7 @@ export default function ChatHistory({
         isTyping={isTyping}
         modelId={modelId}
         userId={userId}
+        setToken={setToken}
       />
     </>
   );
