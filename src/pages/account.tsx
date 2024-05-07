@@ -1,18 +1,37 @@
 import UserSidebar from "@/components/appComp/UserSidebar";
-import user from "../assets/user.svg";
+import userIcon from "../assets/user.svg";
 import Image from "next/image";
 import axios from "axios";
 import UserNavbar from "@/components/appComp/UserNavbar";
 import { useState, useEffect } from "react";
-export default function Account() {
+
+interface user {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export default function Account({ userData }: { userData: user }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [token, setToken] = useState<number>(0);
+  const [user, setUser] = useState<user | null>(userData);
 
   useEffect(() => {
-    const t = localStorage.getItem("token");
-    if (t) {
-      setToken(parseInt(t));
+    async function getBasicThings() {
+      const t = localStorage.getItem("token");
+      const userId = localStorage.getItem("currUser")?.substring(1);
+      console.log(userId);
+      const Base_Url = process.env.NEXT_PUBLIC_BASE_URL;
+      const res = await axios.get(`${Base_Url}/user/${userId}`, {
+        withCredentials: true,
+      });
+      const userData = res.data;
+      setUser(userData);
+      if (t) {
+        setToken(parseInt(t));
+      }
     }
+    getBasicThings();
   }, []);
 
   return (
@@ -26,7 +45,7 @@ export default function Account() {
         <div className="flex flex-col md:flex-row">
           <div className="flex justify-center">
             <Image
-              src={user}
+              src={userIcon}
               alt="user"
               width={90}
               height={100}
@@ -37,19 +56,19 @@ export default function Account() {
             <ul className="flex flex-col">
               <li className="flex justify-between">
                 <h2>Name</h2>
-                <h2>Madhav</h2>
+                <h2>{user?.username}</h2>
               </li>
               <li className="flex justify-between">
                 <h2>Email Address</h2>
-                <h2>Madhav</h2>
+                <h2>{user?.email}</h2>
               </li>
               <li className="flex justify-between">
                 <h2>Gender</h2>
-                <h2>Madhav</h2>
+                <h2>Male</h2>
               </li>
               <li className="flex justify-between">
                 <h2>Password</h2>
-                <h2>jnjf</h2>
+                <h2>{user?.password}</h2>
               </li>
             </ul>
             <div className="flex flex-col gap-10">
